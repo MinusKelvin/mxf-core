@@ -1,0 +1,39 @@
+apply plugin: "com.android.library"
+apply plugin: "kotlin-platform-android"
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+    
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+    }
+    
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+        }
+    }
+    
+    // For some reason there isn't a main.kotlin source set, so we have to do this.
+    sourceSets.main.java.srcDir "src/main/kotlin"
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    expectedBy project(":")
+}
+
+task install(type: Upload) {
+    description "Installs the artifacts to the local Maven repository."
+    configuration = configurations['archives']
+    repositories {
+        mavenDeployer {
+            repository url: repositories.mavenLocal().url
+        }
+    }
+}

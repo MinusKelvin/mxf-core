@@ -1,0 +1,5 @@
+rootProject.name = 'mxf-core'
+
+include ":backend-lwjgl"
+include ":backend-html5"
+include ":backend-android"
